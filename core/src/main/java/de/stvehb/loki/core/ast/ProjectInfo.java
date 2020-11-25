@@ -7,7 +7,7 @@ public class ProjectInfo extends Element {
 
 	private String name;
 	private String version;
-	private String namespace; // "package" in Java //TODO: How to handle missing namespaces?
+	private String namespace;
 	private Author author;
 
 	public ProjectInfo(String name, String version, Author author) {
