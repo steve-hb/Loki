@@ -4,31 +4,31 @@ import javax.annotation.processing.Generated;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 
-@Generated(value = "de.stvehb.loki.generator.spring.SpringGenerator")
-@Data
-@AllArgsConstructor
+@Generated(value = "de.stvehb.loki.generator.java.generate.JavaGenerator")
+@Data()
+@AllArgsConstructor()
 public class Field {
 
-private String name;
+	private String name;
 
-private String type;
+	private String type;
 
-private String description;
+	private String description;
 
-private Deprecation deprecation;
+	private Deprecation deprecation;
 
-private String _default;
+	private String _default;
 
-private boolean required;
+	private Boolean required;
 
-private long minimum;
+	private Long minimum;
 
-private long maximum;
+	private Long maximum;
 
-private String example;
+	private String example;
 
-private Attribute[] attributes;
+	private Attribute[] attributes;
 
-private String[] annotations;
+	private String[] annotations;
 
 }

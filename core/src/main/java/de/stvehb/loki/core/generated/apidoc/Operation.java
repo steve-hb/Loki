@@ -4,25 +4,28 @@ import javax.annotation.processing.Generated;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 
-@Generated(value = "de.stvehb.loki.generator.spring.SpringGenerator")
-@Data
-@AllArgsConstructor
+@Generated(value = "de.stvehb.loki.generator.java.generate.JavaGenerator")
+@Data()
+@AllArgsConstructor()
 public class Operation {
 
-private Method method;
+	private Method method;
 
-private String path;
+	/**
+	 * The full path to this operation, relative to the service's base url. 
+	 */
+	private String path;
 
-private String description;
+	private String description;
 
-private Deprecation deprecation;
+	private Deprecation deprecation;
 
-private Body body;
+	private Body body;
 
-private Parameter[] parameters;
+	private Parameter[] parameters;
 
-private Response[] responses;
+	private Response[] responses;
 
-private Attribute[] attributes;
+	private Attribute[] attributes;
 
 }

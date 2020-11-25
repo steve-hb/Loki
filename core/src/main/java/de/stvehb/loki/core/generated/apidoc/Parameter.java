@@ -4,31 +4,31 @@ import javax.annotation.processing.Generated;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 
-@Generated(value = "de.stvehb.loki.generator.spring.SpringGenerator")
-@Data
-@AllArgsConstructor
+@Generated(value = "de.stvehb.loki.generator.java.generate.JavaGenerator")
+@Data()
+@AllArgsConstructor()
 public class Parameter {
 
-private String name;
+	private String name;
 
-private String type;
+	private String type;
 
-private ParameterLocation location;
+	private ParameterLocation location;
 
-private String description;
+	private String description;
 
-private Deprecation deprecation;
+	private Deprecation deprecation;
 
-private boolean required;
+	private Boolean required;
 
-private String _default;
+	private String _default;
 
-private long minimum;
+	private Long minimum;
 
-private long maximum;
+	private Long maximum;
 
-private String example;
+	private String example;
 
-private Attribute[] attributes;
+	private Attribute[] attributes;
 
 }

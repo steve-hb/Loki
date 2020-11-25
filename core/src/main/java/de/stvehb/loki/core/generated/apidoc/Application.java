@@ -4,11 +4,14 @@ import javax.annotation.processing.Generated;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 
-@Generated(value = "de.stvehb.loki.generator.spring.SpringGenerator")
-@Data
-@AllArgsConstructor
+@Generated(value = "de.stvehb.loki.generator.java.generate.JavaGenerator")
+@Data()
+@AllArgsConstructor()
 public class Application {
 
-private String key;
+	/**
+	 * Unique key identifying this application 
+	 */
+	private String key;
 
 }

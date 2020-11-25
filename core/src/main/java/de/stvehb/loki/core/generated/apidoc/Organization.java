@@ -4,11 +4,14 @@ import javax.annotation.processing.Generated;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 
-@Generated(value = "de.stvehb.loki.generator.spring.SpringGenerator")
-@Data
-@AllArgsConstructor
+@Generated(value = "de.stvehb.loki.generator.java.generate.JavaGenerator")
+@Data()
+@AllArgsConstructor()
 public class Organization {
 
-private String key;
+	/**
+	 * Unique key identifying the organization that owns this service 
+	 */
+	private String key;
 
 }

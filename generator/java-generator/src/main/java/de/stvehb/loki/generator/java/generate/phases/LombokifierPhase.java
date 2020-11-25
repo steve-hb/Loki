@@ -19,7 +19,7 @@ public class LombokifierPhase {
 
 	public static void process(Project project) {
 		project.getTypes().stream()
-			.filter(type -> type instanceof Model).map(type -> (Model) type)
+			.filter(type -> type.getClass() == Model.class).map(type -> (Model) type)
 			.forEach(model -> model.getAnnotations().addAll(DEFAULT_ANNOTATIONS));
 	}
 
