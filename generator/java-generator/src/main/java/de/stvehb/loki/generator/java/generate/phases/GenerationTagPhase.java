@@ -14,7 +14,7 @@ import java.util.List;
 public class GenerationTagPhase {
 
 	private static final List<Annotation> DEFAULT_ANNOTATIONS = Arrays.asList(
-		new Annotation("Generated", "javax.annotation.processing.Generated")
+		new Annotation("Generated", "javax.annotation.processing")
 			.addValue("value", "\"" + JavaGenerator.class.getCanonicalName() + "\"")
 	);
 
