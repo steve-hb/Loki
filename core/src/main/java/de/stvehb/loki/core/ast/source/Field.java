@@ -14,10 +14,13 @@ public class Field extends Element {
 	private Type type;
 	private boolean array;
 	private String name;
+	private String documentation;
 
-	public Field(Type type, boolean array, String name) {
+	public Field(Type type, boolean array, String name, String documentation) {
 		this.type = type;
 		this.array = array;
 		this.name = name;
+		this.documentation = documentation;
 	}
+
 }

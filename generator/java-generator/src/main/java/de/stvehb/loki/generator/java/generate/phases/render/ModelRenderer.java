@@ -23,12 +23,24 @@ public class ModelRenderer {
 		content += ImportRenderer.render(model);
 		content += LINE_BREAK;
 
+		String javaDocs = JavaDocRenderer.render("", model.getDocumentation());
+		if (javaDocs != null) {
+			content += javaDocs;
+			content += LINE_BREAK;
+		}
+
 		for (Annotation annotation : model.getAnnotations()) content += AnnotationRenderer.render(annotation) + LINE_BREAK;
 
 		content += "public " + (model instanceof Enum ? "enum" : "class") + " " + model.getName() + " {" + LINE_BREAK;
 		content += LINE_BREAK;
 
 		for (Field field : model.getFields()) {
+			javaDocs = JavaDocRenderer.render(INDENTATION, field.getDocumentation());
+			if (javaDocs != null) {
+				content += javaDocs;
+				content += LINE_BREAK;
+			}
+
 			for (Annotation annotation : field.getAnnotations()) content += INDENTATION + AnnotationRenderer.render(annotation) + LINE_BREAK;
 			content += INDENTATION + "private " + field.getType().getName() + (field.isArray() ? "[]" : "") + " " + field.getName() + EOL;
 			content += LINE_BREAK;
