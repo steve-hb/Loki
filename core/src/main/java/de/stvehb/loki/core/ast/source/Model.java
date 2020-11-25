@@ -1,6 +1,7 @@
 package de.stvehb.loki.core.ast.source;
 
 import de.stvehb.loki.core.ast.Project;
+import de.stvehb.loki.core.util.Null;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -23,6 +24,11 @@ public class Model extends Type {
 		super(name, namespace, documentation);
 	}
 
+	public Model addField(Field field) {
+		this.getFields().add(field);
+		return this;
+	}
+
 	/**
 	 * Returns a list with all imports for this model including enums, annotations and other models.
 	 * Example: ["com.example.Hello", "com.example.World"]
@@ -38,7 +44,7 @@ public class Model extends Type {
 					.map(Type::getName)
 					.filter(s -> ((Project) this.getParent()).getInfo().getNamespace() != null)//TODO: This is a dirty workaround
 					.map(s -> ((Project) this.getParent()).getInfo().getNamespace() + "." + s),
-				this.getFields().stream().flatMap(field -> field.getAnnotations().stream()
+				this.getFields().stream().flatMap(field -> Null.orEmpty(field.getAnnotations()).stream()
 					.filter(annotation -> annotation.getNamespace() != null)
 					.map(annotation -> annotation.getNamespace() + "." + annotation.getName())
 				)

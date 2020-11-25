@@ -2,7 +2,7 @@ package de.stvehb.loki.generator.java.generate.phases;
 
 import de.stvehb.loki.core.ast.Project;
 import de.stvehb.loki.core.ast.source.Annotation;
-import de.stvehb.loki.core.ast.source.Model;
+import de.stvehb.loki.core.util.ModelUtil;
 import de.stvehb.loki.generator.java.generate.JavaGenerator;
 
 import java.util.Arrays;
@@ -19,9 +19,7 @@ public class GenerationTagPhase {
 	);
 
 	public static void process(Project project) {
-		project.getTypes().stream()
-			.filter(type -> type instanceof Model).map(type -> (Model) type)
-			.forEach(model -> model.getAnnotations().addAll(DEFAULT_ANNOTATIONS));
+		ModelUtil.modelTypeStream(project).forEach(model -> model.getAnnotations().addAll(DEFAULT_ANNOTATIONS));
 	}
 
 }

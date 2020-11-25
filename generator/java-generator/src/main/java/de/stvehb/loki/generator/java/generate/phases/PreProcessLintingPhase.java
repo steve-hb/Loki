@@ -1,11 +1,13 @@
 package de.stvehb.loki.generator.java.generate.phases;
 
 import de.stvehb.loki.core.ast.Project;
-import de.stvehb.loki.core.ast.source.Model;
 import de.stvehb.loki.core.ast.source.Type;
 import de.stvehb.loki.core.util.Naming;
+import de.stvehb.loki.core.util.ModelUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.stream.Stream;
 
 /**
  * This phase will be executed before the AST gets processed by the Java generator. It's responsible for escaping illegal
@@ -19,17 +21,15 @@ public class PreProcessLintingPhase {
 		LOGGER.info("Start linting all models...");
 
 		LOGGER.debug("==> Apply Java naming conventions to classes and enums");
-		for (Type type : project.getTypes()) if(!type.isBuiltIn()) type.setName(Naming.toJavaClass(type.getName()));
+		for (Type type : ModelUtil.types(project)) if(!type.isBuiltIn()) type.setName(Naming.toJavaClass(type.getName()));
 
 		LOGGER.debug("==> Apply escaping and naming strategy to fields");
-		project.getTypes().stream()
-			.filter(type -> type instanceof Model).map(type -> (Model) type)
-			.forEach(model -> model.getFields().forEach(field ->
-				field.setName(Naming.escapeReservedKeywords(field.getName()))
-			));
+		ModelUtil.modelTypeStream(project).forEach(model -> model.getFields().forEach(field ->
+			field.setName(Naming.escapeReservedKeywords(field.getName()))
+		));
 
 		LOGGER.debug("==> Apply naming convention for all types (string -> String, built_in_type -> BuiltInType)");
-		project.getTypes().forEach(type -> type.setName(Naming.toJavaClass(type.getName())));
+		ModelUtil.types(project).forEach(type -> type.setName(Naming.toJavaClass(type.getName())));
 	}
 
 }
