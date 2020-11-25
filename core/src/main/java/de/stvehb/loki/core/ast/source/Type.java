@@ -12,6 +12,12 @@ public class Type extends Element {
 
 	private String name;
 	private String namespace;
+	private String documentation;
+
+	public Type(String name, String namespace) {
+		this.name = name;
+		this.namespace = namespace;
+	}
 
 	/**
 	 * Return whether this type is a built-in type of the target language.

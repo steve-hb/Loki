@@ -11,8 +11,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Enum extends Model {
 
-	public Enum(String name, String namespace) {
-		super(name, namespace);
+	public Enum(String name, String namespace, String documentation) {
+		super(name, namespace, documentation);
 	}
 
 }

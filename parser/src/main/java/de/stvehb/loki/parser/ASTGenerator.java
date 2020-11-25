@@ -59,8 +59,10 @@ public class ASTGenerator {
 		List<Type> types = new ArrayList<>();
 		types.addAll(JAVA_TYPES);//TODO: The generator/compiler should add types
 
-		Arrays.stream(service.getModels()).forEach(m -> types.add(new Model(m.getName(), service.getNamespace())));
-		Arrays.stream(service.getEnums()).forEach(e -> types.add(new Enum(e.getName(), service.getNamespace())));
+		Arrays.stream(service.getModels()).forEach(m -> types.add(new Model(m.getName(), service.getNamespace(),
+			m.getDescription())));
+		Arrays.stream(service.getEnums()).forEach(e -> types.add(new Enum(e.getName(), service.getNamespace(),
+			e.getDescription())));
 
 		LOGGER.debug("Type generation phase 2: generating fields with type bindings");
 
@@ -72,7 +74,7 @@ public class ASTGenerator {
 				LOGGER.debug("Adding field to {} with type {} and name {}", model.getName(), _field.getType(), _field.getName());
 				Type type = types.stream().filter(m -> m.getName().equals(Naming.extractType(_field.getType()))).findFirst().get();
 
-				Field field = new Field(type, Naming.isArrayType(_field.getType()), Naming.extractType(_field.getName()));
+				Field field = new Field(type, Naming.isArrayType(_field.getType()), Naming.extractType(_field.getName()), _field.getDescription());
 				if (_field.getAnnotations() != null) {
 					for (String _annotation : _field.getAnnotations()) {
 						field.getAnnotations().add(new Annotation(_annotation, "TODO"));
@@ -87,11 +89,11 @@ public class ASTGenerator {
 			Enum model = (Enum) types.stream().filter(_m -> _m.getName().equals(_enum.getName())).findFirst().get();
 
 			if (_enum.getAttributes() != null) {
-				Arrays.stream(_enum.getAttributes()).forEach(_attributes -> {
-					Type type = types.stream().filter(_m -> _m.getName().equals(_attributes.getName())).findFirst().get();
+				Arrays.stream(_enum.getAttributes()).forEach(_attribute -> {
+					Type type = types.stream().filter(_m -> _m.getName().equals(_attribute.getName())).findFirst().get();
 
 					model.getFields().add(
-						new Field(type, false, _attributes.getName())
+						new Field(type, false, _attribute.getName(), _attribute.getDescription())
 					);
 				});
 			}

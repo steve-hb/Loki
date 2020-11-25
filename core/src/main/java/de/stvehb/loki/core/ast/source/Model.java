@@ -19,8 +19,8 @@ public class Model extends Type {
 	private List<Annotation> annotations = new ArrayList<>();
 	private List<Field> fields = new ArrayList<>();
 
-	public Model(String name, String namespace) {
-		super(name, namespace);
+	public Model(String name, String namespace, String documentation) {
+		super(name, namespace, documentation);
 	}
 
 	/**
