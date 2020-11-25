@@ -4,29 +4,57 @@ import javax.annotation.processing.Generated;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 
-@Generated(value = "de.stvehb.loki.generator.spring.SpringGenerator")
-@Data
-@AllArgsConstructor
+/**
+ * An import is used to declare a dependency on another application. This allows you 
+ * to reference the models and or enums from that application in your own app. 
+ */
+@Generated(value = "de.stvehb.loki.generator.java.generate.JavaGenerator")
+@Data()
+@AllArgsConstructor()
 public class Import {
 
-private String uri;
+	/**
+	 * Full URI to the service.json file of the service we are importing 
+	 */
+	private String uri;
 
-private String namespace;
+	/**
+	 * the fully qualified namespace that we have imported 
+	 */
+	private String namespace;
 
-private Organization organization;
+	private Organization organization;
 
-private Application application;
+	private Application application;
 
-private String version;
+	/**
+	 * The version of the service that we are importing 
+	 */
+	private String version;
 
-private String[] enums;
+	/**
+	 * Enums made available by this import 
+	 */
+	private String[] enums;
 
-private String[] interfaces;
+	/**
+	 * Interfaces made available by this import 
+	 */
+	private String[] interfaces;
 
-private String[] unions;
+	/**
+	 * Unions made available by this import 
+	 */
+	private String[] unions;
 
-private String[] models;
+	/**
+	 * Models made available by this import 
+	 */
+	private String[] models;
 
-private Annotation[] annotations;
+	/**
+	 * Annotations made available by this import 
+	 */
+	private Annotation[] annotations;
 
 }

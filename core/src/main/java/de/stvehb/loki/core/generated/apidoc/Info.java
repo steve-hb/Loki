@@ -4,13 +4,16 @@ import javax.annotation.processing.Generated;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 
-@Generated(value = "de.stvehb.loki.generator.spring.SpringGenerator")
-@Data
-@AllArgsConstructor
+/**
+ * General metadata about this service 
+ */
+@Generated(value = "de.stvehb.loki.generator.java.generate.JavaGenerator")
+@Data()
+@AllArgsConstructor()
 public class Info {
 
-private License license;
+	private License license;
 
-private Contact contact;
+	private Contact contact;
 
 }
