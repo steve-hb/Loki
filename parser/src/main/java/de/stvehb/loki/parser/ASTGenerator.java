@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ASTGenerator {
 
@@ -28,20 +29,14 @@ public class ASTGenerator {
 
 	public static Project generate(Service service) {
 		LOGGER.info("Generating basic AST...");
-		Project project = new Project(
+		List<Type> types = generateTypes(service); // Enums and models have to be generated at the same time
+
+		return new Project(
 			generateProjectInfo(service),
-			generateTypes(service),
+			types.stream().filter(t -> t.getClass() == Model.class).map(t -> (Model) t).collect(Collectors.toList()),
+			types.stream().filter(t -> t.getClass() == Enum.class).map(t -> (Enum) t).collect(Collectors.toList()),
 			generateDependencies(service)
 		);
-
-		LOGGER.info("Connecting all elements...");
-		for (Type type : project.getTypes()) type.setParent(project);
-		project.getInfo().setParent(project);
-		project.getInfo().getAuthor().setParent(project.getInfo());
-		project.getTypes().stream().filter(type -> type instanceof Model).map(type -> (Model) type)
-			.forEach(model -> model.getFields().forEach(field -> field.setParent(model)));
-
-		return project;
 	}
 
 	private static ProjectInfo generateProjectInfo(Service service) {

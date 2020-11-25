@@ -5,6 +5,7 @@ import de.stvehb.loki.core.ast.source.Annotation;
 import de.stvehb.loki.core.ast.source.Enum;
 import de.stvehb.loki.core.ast.source.Field;
 import de.stvehb.loki.core.ast.source.Model;
+import de.stvehb.loki.core.util.Null;
 
 public class ModelRenderer {
 
@@ -41,7 +42,7 @@ public class ModelRenderer {
 				content += LINE_BREAK;
 			}
 
-			for (Annotation annotation : field.getAnnotations()) content += INDENTATION + AnnotationRenderer.render(annotation) + LINE_BREAK;
+			for (Annotation annotation : Null.orEmpty(field.getAnnotations())) content += INDENTATION + AnnotationRenderer.render(annotation) + LINE_BREAK;
 			content += INDENTATION + "private " + field.getType().getName() + (field.isArray() ? "[]" : "") + " " + field.getName() + EOL;
 			content += LINE_BREAK;
 		}

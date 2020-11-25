@@ -1,0 +1,18 @@
+{
+  "info": {
+    "name": "ToDo Example",
+    "version": "1.2.3",
+    "namespace": "de.stvehb.example.todo",
+    "author": { "name": "Steve", "email": "stve.hb@gmail.com", "roles": [ "Developer", "Maintainer" ] }
+  },
+  "models": [
+    {
+      "name": "Task",
+      "documentation": "A generic task",
+      "fields": [
+        { "type": { "name": "string" }, "name": "title", "documentation": "The title of the task." },
+        { "type": { "name": "string" }, "name": "description", "documentation": "The description of the task." }
+      ]
+    }
+  ]
+}
