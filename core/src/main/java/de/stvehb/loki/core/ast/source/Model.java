@@ -30,7 +30,6 @@ public class Model extends Type {
 	 * @return a list with all imports
 	 */
 	public List<String> getImports() {
-		//TODO: Annotations
 		return Stream.concat(
 			Stream.concat(
 				this.getFields().stream()

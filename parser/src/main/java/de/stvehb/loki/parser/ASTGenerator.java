@@ -77,7 +77,7 @@ public class ASTGenerator {
 				Field field = new Field(type, Naming.isArrayType(_field.getType()), Naming.extractType(_field.getName()), _field.getDescription());
 				if (_field.getAnnotations() != null) {
 					for (String _annotation : _field.getAnnotations()) {
-						field.getAnnotations().add(new Annotation(_annotation, "TODO"));
+						field.getAnnotations().add(new Annotation(_annotation, null));
 					}
 				}
 				model.getFields().add(field);
