@@ -18,6 +18,7 @@ public class PreProcessLintingPhase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PreProcessLintingPhase.class.getSimpleName());
 
 	public static void process(Project project) {
+		//TODO: [string] for arrays and string=>string for maps
 		LOGGER.info("Start linting all models...");
 
 		LOGGER.debug("==> Apply Java naming conventions to classes and enums");

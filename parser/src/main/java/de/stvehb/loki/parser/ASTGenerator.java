@@ -1,5 +1,6 @@
 package de.stvehb.loki.parser;
 
+import de.stvehb.loki.core.ast.factory.FieldFactory;
 import de.stvehb.loki.core.ast.source.*;
 import de.stvehb.loki.core.ast.source.Enum;
 import de.stvehb.loki.core.util.Naming;
@@ -33,6 +34,7 @@ public class ASTGenerator {
 
 		return new Project(
 			generateProjectInfo(service),
+			null,
 			types.stream().filter(t -> t.getClass() == Model.class).map(t -> (Model) t).collect(Collectors.toList()),
 			types.stream().filter(t -> t.getClass() == Enum.class).map(t -> (Enum) t).collect(Collectors.toList()),
 			generateDependencies(service)
@@ -40,7 +42,11 @@ public class ASTGenerator {
 	}
 
 	private static ProjectInfo generateProjectInfo(Service service) {
-		return new ProjectInfo(service.getName(), service.getVersion(), new Author(
+		return new ProjectInfo(
+			service.getName(),
+			service.getVersion(),
+			service.getNamespace(),
+			new Author(
 				service.getInfo().getContact().getName(),
 				service.getInfo().getContact().getEmail(),
 				new String[]{} //TODO
@@ -69,7 +75,7 @@ public class ASTGenerator {
 				LOGGER.debug("Adding field to {} with type {} and name {}", model.getName(), _field.getType(), _field.getName());
 				Type type = types.stream().filter(m -> m.getName().equals(Naming.extractType(_field.getType()))).findFirst().get();
 
-				Field field = new Field(type, Naming.isArrayType(_field.getType()), Naming.extractType(_field.getName()), _field.getDescription());
+				Field field = FieldFactory.create(type, Naming.isArrayType(_field.getType()), Naming.extractType(_field.getName()), _field.getDescription());
 				if (_field.getAnnotations() != null) {
 					for (String _annotation : _field.getAnnotations()) {
 						field.getAnnotations().add(new Annotation(_annotation, null));
@@ -88,7 +94,7 @@ public class ASTGenerator {
 					Type type = types.stream().filter(_m -> _m.getName().equals(_attribute.getName())).findFirst().get();
 
 					model.getFields().add(
-						new Field(type, false, _attribute.getName(), _attribute.getDescription())
+						FieldFactory.create(type, false, _attribute.getName(), _attribute.getDescription())
 					);
 				});
 			}
