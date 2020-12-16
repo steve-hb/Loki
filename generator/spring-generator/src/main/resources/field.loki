@@ -1,0 +1,2 @@
+{{ annotations }}
+{{ accessor }} {{ attributes }} {{ type }} {{ name }} {{ value }};

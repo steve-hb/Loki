@@ -15,6 +15,7 @@ import java.util.List;
 public class Project extends Element {
 
 	private ProjectInfo info;
+	private List<CompilerOption> compilerOptions;
 	private List<Model> models;
 	private List<Enum> enums;
 	private List<Dependency> dependencies;
