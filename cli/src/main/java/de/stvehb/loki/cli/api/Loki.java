@@ -169,7 +169,7 @@ public class Loki {
 		GenerationTagPhase.process(context, project);
 		LombokifierPhase.process(context, project);
 
-		Map<Model, String> modelContents = ModelGenerationPhase.process(project);
+		Map<Model, String> modelContents = ModelGenerationPhase.process(context, project);
 		File targetDirectoryFile = new File("./target/");
 		targetDirectoryFile.mkdir();
 
@@ -199,7 +199,7 @@ public class Loki {
 		GenerationTagPhase.process(context, project);
 		LombokifierPhase.process(context, project);
 
-		Map<Model, String> modelContents = ModelGenerationPhase.process(project);
+		Map<Model, String> modelContents = ModelGenerationPhase.process(context, project);
 		File targetDirectoryFile = new File("./target/");
 		targetDirectoryFile.mkdir();
 
