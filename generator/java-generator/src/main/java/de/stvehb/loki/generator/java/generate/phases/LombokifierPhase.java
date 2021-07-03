@@ -3,6 +3,7 @@ package de.stvehb.loki.generator.java.generate.phases;
 import de.stvehb.loki.core.ast.Project;
 import de.stvehb.loki.core.ast.source.Annotation;
 import de.stvehb.loki.core.ast.source.Model;
+import de.stvehb.loki.core.option.Context;
 import de.stvehb.loki.core.util.ModelUtil;
 
 import java.util.Arrays;
@@ -18,7 +19,7 @@ public class LombokifierPhase {
 		new Annotation("AllArgsConstructor", "lombok")
 	);
 
-	public static void process(Project project) {
+	public static void process(Context context, Project project) {
 		ModelUtil.modelTypeStream(project)
 			.filter(type -> type.getClass() == Model.class) // Enums are not allowed to have @Data annotations
 			.forEach(model -> model.getAnnotations().addAll(DEFAULT_ANNOTATIONS));

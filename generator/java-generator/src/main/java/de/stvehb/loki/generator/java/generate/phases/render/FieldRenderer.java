@@ -5,7 +5,7 @@ import de.stvehb.loki.core.ast.source.Field;
 public class FieldRenderer {
 
 	public static String render(Field field) {
-		String content = "privat ";
+		String content = "private ";
 
 		if (field.getMapValueType() != null) content += "Map<";
 

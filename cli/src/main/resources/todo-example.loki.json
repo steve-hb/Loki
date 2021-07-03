@@ -5,7 +5,17 @@
     "namespace": "de.stvehb.example.todo",
     "author": { "name": "Steve", "email": "stve.hb@gmail.com", "roles": [ "Developer", "Maintainer" ] }
   },
+  "compilerOptions": [
+    { "compiler": "java", "key": "useListsForArrays", "value": "true" }
+  ],
   "models": [
+    {
+      "name": "Project",
+      "documentation": "A project contains multiple tasks",
+      "fields": [
+        { "type": { "name":  "Task" }, "array": true, "name": "tasks", "documentation": "Tasks to be done or that have been done." }
+      ]
+    },
     {
       "name": "Task",
       "documentation": "A generic task",

@@ -5,10 +5,11 @@ import de.stvehb.loki.core.ast.Author;
 import de.stvehb.loki.core.ast.Project;
 import de.stvehb.loki.core.ast.ProjectInfo;
 import de.stvehb.loki.core.ast.factory.FieldFactory;
-import de.stvehb.loki.core.ast.source.Field;
 import de.stvehb.loki.core.ast.source.Model;
 import de.stvehb.loki.core.ast.source.Type;
 import de.stvehb.loki.core.generated.apidoc.Service;
+import de.stvehb.loki.core.option.DebugOptions;
+import de.stvehb.loki.core.option.Context;
 import de.stvehb.loki.core.util.ModelUtil;
 import de.stvehb.loki.parser.ASTGenerator;
 import de.stvehb.loki.parser.ApidocParser;
@@ -157,12 +158,16 @@ public class Loki {
 	}
 
 	public static void process(Project project) {
+		Context context = new Context(
+			new DebugOptions(true)
+		);
+
 		project.getModels().forEach(type -> type.setNamespace(project.getInfo().getNamespace())); //TODO: Workaround
 		project.getEnums().forEach(type -> type.setNamespace(project.getInfo().getNamespace()));
 
-		PreProcessLintingPhase.process(project);
-		GenerationTagPhase.process(project);
-		LombokifierPhase.process(project);
+		PreProcessLintingPhase.process(context, project);
+		GenerationTagPhase.process(context, project);
+		LombokifierPhase.process(context, project);
 
 		Map<Model, String> modelContents = ModelGenerationPhase.process(project);
 		File targetDirectoryFile = new File("./target/");
@@ -177,6 +182,10 @@ public class Loki {
 	 */
 	@SneakyThrows
 	private static void regenerateApiBuilderModels() {
+		Context context = new Context(
+			new DebugOptions(true)
+		);
+
 		Service service = Loki.loadApiBuilderService(new File("./apibuilder.json").toPath());
 		Project project = convertApiBuilderToAST(service);
 
@@ -186,9 +195,9 @@ public class Loki {
 		project.getModels().forEach(type -> type.setNamespace(namespace));
 		project.getEnums().forEach(type -> type.setNamespace(namespace));
 
-		PreProcessLintingPhase.process(project);
-		GenerationTagPhase.process(project);
-		LombokifierPhase.process(project);
+		PreProcessLintingPhase.process(context, project);
+		GenerationTagPhase.process(context, project);
+		LombokifierPhase.process(context, project);
 
 		Map<Model, String> modelContents = ModelGenerationPhase.process(project);
 		File targetDirectoryFile = new File("./target/");
@@ -223,7 +232,7 @@ public class Loki {
 	}
 
 	private static void loadLokiModels() {
-		Project project = loadLokiProjectFromResource("loki-models.loki.json");
+		Project project = loadLokiProjectFromResource("todo-example.loki.json");
 		System.out.println(project);
 		process(project);
 	}
