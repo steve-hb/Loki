@@ -32,6 +32,7 @@ public class ModelRenderer {
 
 		for (Annotation annotation : model.getAnnotations()) content += AnnotationRenderer.render(annotation) + LINE_BREAK;
 
+		//TODO: Inheritance
 		content += "public " + (model instanceof Enum ? "enum" : "class") + " " + model.getName() + " {" + LINE_BREAK;
 		content += LINE_BREAK;
 
@@ -43,7 +44,7 @@ public class ModelRenderer {
 			}
 
 			for (Annotation annotation : Null.orEmpty(field.getAnnotations())) content += INDENTATION + AnnotationRenderer.render(annotation) + LINE_BREAK;
-			content += INDENTATION + "private " + field.getType().getName() + (field.isArray() ? "[]" : "") + " " + field.getName() + EOL;
+			content += INDENTATION + FieldRenderer.render(field) + EOL;
 			content += LINE_BREAK;
 		}
 

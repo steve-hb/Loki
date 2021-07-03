@@ -1,8 +1,10 @@
 package de.stvehb.loki.core.ast;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class ProjectInfo extends Element {
 
 	private String name;
@@ -10,9 +12,4 @@ public class ProjectInfo extends Element {
 	private String namespace;
 	private Author author;
 
-	public ProjectInfo(String name, String version, Author author) {
-		this.name = name;
-		this.version = version;
-		this.author = author;
-	}
 }

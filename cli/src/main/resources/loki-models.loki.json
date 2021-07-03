@@ -1,0 +1,125 @@
+{
+  "info": {
+    "name": "Loki",
+    "version": "1.0.0",
+    "namespace": "de.stvehb.loki",
+    "author": { "name": "Steve", "email": "stve.hb@gmail.com", "roles": [ "Developer", "Maintainer" ] }
+  },
+
+  "compilerOptions": [
+    { "compiler": "java", "key": "useListsForArrays", "value": "true" }
+  ],
+
+  "models": [
+    {
+      "name": "Project", "documentation": "Represents a complete project including build management etc - basically a repository.",
+      "fields": [
+        { "type": { "name": "ProjectInfo" }, "name": "info" },
+        { "type": { "name": "CompilerOption" }, "name": "compilerOptions" },
+        { "type": { "name": "Dependency" }, "name": "dependencies", "array": true },
+        { "type": { "name": "Model" }, "name": "models", "array": true },
+        { "type": { "name": "Enum" }, "name": "enums", "array": true }
+      ]
+    },
+
+    {
+      "name": "CompilerOption",
+      "documentation": "A compiler option can change the behaviour of a specific compiler. This could be useful to enable incompatible features.",
+      "fields": [
+        { "type": { "name": "string" }, "name": "compiler" },
+        { "type": { "name": "string" }, "name": "key" },
+        { "type": { "name": "string" }, "name": "value" }
+      ]
+    },
+
+    {
+      "name": "Element",
+      "documentation": "Just a helper class to represent an element with a parent element.",
+      "fields": [
+        { "type": { "name": "Element" }, "name": "parent" }
+      ]
+    },
+
+    {
+      "name": "ProjectInfo",
+      "inheritance": "Element",
+      "fields": [
+        { "type": { "name": "string" }, "name": "name" },
+        { "type": { "name": "string" }, "name": "version" },
+        { "type": { "name": "string" }, "name": "namespace" },
+        { "type": { "name": "Author" }, "name": "author" }
+      ]
+    },
+
+    {
+      "name": "Author",
+      "inheritance": "Element",
+      "fields": [
+        { "type": { "name": "string" }, "name": "name" },
+        { "type": { "name": "string" }, "name": "email" },
+        { "type": { "name": "string" }, "name": "roles", "array": true }
+      ]
+    },
+
+    {
+      "name": "Dependency",
+      "inheritance": "Element",
+      "fields": [
+        { "type": { "name": "string" }, "name": "author" },
+        { "type": { "name": "string" }, "name": "artifactId" },
+        { "type": { "name": "string" }, "name": "version" }
+      ]
+    },
+
+    {
+      "name": "Model",
+      "inheritance": "Element",
+      "fields": [
+        { "type": { "name": "Annotation" }, "name": "annotations", "array": true },
+        { "type": { "name": "Field" }, "name": "fields", "array": true },
+        { "type": { "name": "string" }, "name": "inheritance", "documentation": "Defines the parent model used for inheritance. If possible, the generator will extend this model with the given parent model, otherwise all fields and properties shall be copied." }
+      ]
+    },
+
+    {
+      "name": "Enum",
+      "inheritance": "Model"
+    },
+
+    {
+      "name": "Field",
+      "inheritance": "Element",
+      "fields": [
+        { "type": { "name": "Annotation" }, "name": "annotations", "array": true },
+        { "type": { "name": "Type" }, "name": "type" },
+        { "type": { "name": "boolean" }, "name": "array" },
+        { "type": { "name": "string" }, "name": "name" },
+        { "type": { "name": "string" }, "name": "documentation" }
+      ]
+    },
+
+    {
+      "name": "Type",
+      "inheritance": "Element",
+      "fields": [
+        { "type": { "name": "string" }, "name": "name" },
+        { "type": { "name": "string" }, "name": "namespace" },
+        { "type": { "name": "string" }, "name": "documentation" }
+      ]
+    },
+
+    {
+      "name": "BuiltInType",
+      "inheritance": "Type",
+      "documentation": "Represents a built-in type of a language. Example: all native/primitive types in Java (int, short, float etc.)"
+    },
+
+    {
+      "name": "Annotation",
+      "inheritance": "Type",
+      "fields": [
+        { "type": { "name": "string=>string" }, "name": "values" }
+      ]
+    }
+  ]
+}

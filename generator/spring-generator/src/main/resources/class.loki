@@ -1,0 +1,14 @@
+{{ package }}
+
+{{ imports }}
+
+{{ annotations }}
+public {{ type }} {{ name }} {
+
+{{ enum_values }}
+
+{{ fields }}
+
+{{ methods }}
+
+}

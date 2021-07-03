@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import de.stvehb.loki.core.ast.Author;
 import de.stvehb.loki.core.ast.Project;
 import de.stvehb.loki.core.ast.ProjectInfo;
+import de.stvehb.loki.core.ast.factory.FieldFactory;
 import de.stvehb.loki.core.ast.source.Field;
 import de.stvehb.loki.core.ast.source.Model;
 import de.stvehb.loki.core.ast.source.Type;
@@ -196,8 +197,39 @@ public class Loki {
 		ResourceOutputPhase.processModels(targetDirectoryFile.toPath(), modelContents);
 	}
 
+	private static void generateLokiModels() {
+		Type stringType = new Type("string", null, null);
+
+		String output = new GsonBuilder().setPrettyPrinting()
+			.create()
+			.toJson(new Project(
+				new ProjectInfo("ToDo Example", "1.2.3", null, new Author(
+					"Steve",
+					"stve.hb@gmail.com",
+					new String[]{ "Developer", "Maintainer" }
+					)),
+				null,
+				Arrays.asList(
+					new Model("Task", "de.stvehb.example.todo", "A generic task")
+						.addField(FieldFactory.create(stringType, false, "title", "The title of the task"))
+						.addField(FieldFactory.create(stringType, false, "description", "The description of the task"))
+				),
+				null,
+				null
+			)
+		);
+
+		System.out.println(output);
+	}
+
+	private static void loadLokiModels() {
+		Project project = loadLokiProjectFromResource("loki-models.loki.json");
+		System.out.println(project);
+		process(project);
+	}
+
 	public static void main(String[] args) {
-		regenerateApiBuilderModels();
+		loadLokiModels();
 	}
 
 }

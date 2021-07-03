@@ -11,7 +11,7 @@ public class Annotation extends Type {
 	private Map<String, String> values = new HashMap<>();
 
 	public Annotation(String name, String namespace) {
-		super(name, namespace);
+		super(name, namespace, null);
 	}
 
 	public Annotation addValue(String key, String value) {

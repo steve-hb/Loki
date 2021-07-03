@@ -10,7 +10,7 @@ import lombok.Data;
 public class BuiltInType extends Type {
 
 	public BuiltInType(String name) {
-		super(name, null);
+		super(name, null, null);
 	}
 
 	@Override
