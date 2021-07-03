@@ -1,10 +1,10 @@
 # Loki - A "Cloud Native" Code Generation Tool
 
-The aim of Loki is to provide a CLI which lets you create fully-fetched MicroServices and Functions based on a single
-API description.
+The goal of Loki is to provide a CLI which lets you create fully-fetched MicroServices and Serverless Functions based
+on a single API description.
 
 Originally the Loki specification for services was based on apibuilder.io's service specification.
-I originally extended their spec with some new auto-generation- & scaffolding-techniques and features. <br>
+I originally extended their spec with some new auto-generation & scaffolding techniques aswell as features. <br>
 For example: They manually declare all CRUD endpoints, this could be done by the generator itself based on field-parameters.
 
 In the current version, the Loki format is incompatible with ApiDoc.
@@ -13,9 +13,9 @@ If you want to use Loki with an ApiDoc file, you can either rewrite or import it
 ## Goals
 > Note: My focus is currently on Java using Quarkus/Spring
 
-The main objective is to develop MicroServices & Functions, which would normally
+The main objective is to develop MicroServices & Serverless Functions, which would normally
 cost me up to multiple hours of developing, coding, debugging and testing (integration, unit etc.), in under 5 minutes.
-Loki should try to generate as much as possible.
+Loki shall try to generate as much as possible for the user.
 
 * Model generation
   * Field validation (javax: @Email etc.)
