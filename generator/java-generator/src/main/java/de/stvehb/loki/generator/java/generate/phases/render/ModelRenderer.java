@@ -10,7 +10,11 @@ import de.stvehb.loki.core.util.Null;
 
 public class ModelRenderer {
 
-	static final String EOL = ";\n";
+	/**
+	 * End of statement (semicolon).
+	 */
+	static final String EOS = ";";
+	static final String EOL = EOS + "\n";
 	static final String LINE_BREAK = "\n";
 	static final String INDENTATION = "	"; //TODO: Tabs vs X spaces? Maybe replace Tabs with X spaces in post-processing?
 	static final String SINGLE_LINE_COMMENT = "// ";
@@ -49,8 +53,7 @@ public class ModelRenderer {
 			}
 
 			for (Annotation annotation : Null.orEmpty(field.getAnnotations())) content += INDENTATION + AnnotationRenderer.render(annotation) + LINE_BREAK;
-			content += INDENTATION + FieldRenderer.render(field) + EOL; // Render field
-			content += DebugRenderer.generateLineDebugs(context);
+			content += INDENTATION + FieldRenderer.render(context, field) + LINE_BREAK; // Render field
 			content += LINE_BREAK;
 		}
 
