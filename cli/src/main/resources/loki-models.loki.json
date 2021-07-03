@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Loki",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "namespace": "de.stvehb.loki",
     "author": { "name": "Steve", "email": "stve.hb@gmail.com", "roles": [ "Developer", "Maintainer" ] }
   },
