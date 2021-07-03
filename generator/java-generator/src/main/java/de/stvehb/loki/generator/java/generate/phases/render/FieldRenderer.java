@@ -7,27 +7,31 @@ public class FieldRenderer {
 
 	public static String render(Context context, Field field) {
 		String content = "private ";
+		context.getDebuggingStore().getLineStore().add("Render: Hardcoded accessor -> private");
 
 		if (field.getMapValueType() != null) content += "Map<";
 
 		content += field.getType().getName();
+		context.getDebuggingStore().getLineStore().add("Render: Field type -> " + field.getType().getName());
 
-		if (field.getMapValueType() != null) content += ">";
-		if (field.isArray()) content += "[]";
+		if (field.getMapValueType() != null) {
+			content +=", ";
+			content += field.getMapValueType().getName();
+			content += ">";
+
+			context.getDebuggingStore().getLineStore().add("Render: Map value type -> " + field.getMapValueType().getName());
+		}
+
+		if (field.isArray()) {
+			content += "[]";
+			context.getDebuggingStore().getLineStore().add("Render: Field is array");
+		}
 
 		content += " ";
 		content += field.getName();
+		context.getDebuggingStore().getLineStore().add("Render: Field name -> " + field.getName());
 
 		content += ModelRenderer.EOS;
-
-		// Add debugging information
-		context.getDebuggingStore().getLineStore().add("Render: Hardcoded accessor -> private");
-		context.getDebuggingStore().getLineStore().add("Render: Field type -> " + field.getType().getName());
-		context.getDebuggingStore().getLineStore().add("Render: Field name -> " + field.getName());
-		if (field.getMapValueType() != null)
-			context.getDebuggingStore().getLineStore().add("Render: Field is typeof Map (Map value type not null)");
-		if (field.isArray())
-			context.getDebuggingStore().getLineStore().add("Render: Field is array");
 		content += DebugRenderer.generateLineDebugs(context);
 
 		return content;

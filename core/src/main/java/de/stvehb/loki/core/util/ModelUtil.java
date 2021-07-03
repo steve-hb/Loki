@@ -6,6 +6,7 @@ import de.stvehb.loki.core.ast.source.Model;
 import de.stvehb.loki.core.ast.source.Type;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -56,7 +57,10 @@ public class ModelUtil {
 	 */
 	public static Stream<Type> fieldTypes(Project project) {
 		return project.getModels().stream().map(Model::getFields).flatMap(
-			fields -> fields.stream().map(Field::getType)
-		).distinct();
+			fields -> Stream.concat(
+				fields.stream().map(Field::getType),
+				fields.stream().map(Field::getMapValueType)
+			)
+		).filter(Objects::nonNull).distinct();
 	}
 }

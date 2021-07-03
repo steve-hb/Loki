@@ -21,7 +21,8 @@
       "documentation": "A generic task",
       "fields": [
         { "type": { "name": "string" }, "name": "title", "documentation": "The title of the task." },
-        { "type": { "name": "string" }, "name": "description", "documentation": "The description of the task." }
+        { "type": { "name": "string" }, "name": "description", "documentation": "The description of the task." },
+        { "type": { "name": "string" }, "mapValueType": { "name": "string" }, "name": "description", "documentation": "The roles of users related to this task (e.g. reporter, assignee)." }
       ]
     }
   ]
