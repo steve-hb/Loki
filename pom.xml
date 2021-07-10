@@ -72,7 +72,8 @@
 		<module>cli</module>
 		<module>parser</module>
 		<module>generator</module>
-	</modules>
+        <module>maven-generator</module>
+    </modules>
 
 	<build>
 		<plugins>
