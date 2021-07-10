@@ -15,4 +15,7 @@ public class JavaTypes {
 		new BuiltInType("Object")
 	);
 
+	public static final Type LIST = new Type("List", "java.util", null);
+	public static final Type MAP = new Type("Map", "java.util", null);
+
 }

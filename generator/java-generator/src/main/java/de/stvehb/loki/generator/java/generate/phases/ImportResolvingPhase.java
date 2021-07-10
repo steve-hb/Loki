@@ -6,6 +6,8 @@ import de.stvehb.loki.core.ast.source.Field;
 import de.stvehb.loki.core.ast.source.Model;
 import de.stvehb.loki.core.ast.source.Type;
 import de.stvehb.loki.core.option.Context;
+import de.stvehb.loki.core.option.JavaGeneratorOptions;
+import de.stvehb.loki.generator.java.generate.JavaTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,24 +22,24 @@ public class ImportResolvingPhase {
 
 	public static void process(Context context, Project project) {
 		project.getModels().forEach(model -> {
-			model.setImports(generateImports(model));
+			model.setImports(generateImports(context, model));
 			LOGGER.debug("Imports of {}: {}", model.getName(), model.getImports());
 		});
 	}
 
-	private static List<String> generateImports(Model model) {
-		Stream<Type> fieldTypes = findFieldTypes(model);
+	private static List<String> generateImports(Context context, Model model) {
+		Stream<Type> fieldTypes = findFieldTypes(context, model);
 		Stream<Type> annotationTypes = findAnnotationTypes(model);
 		LOGGER.debug("Field types of {}: {}", model.getName(), fieldTypes.collect(Collectors.toList()));
 		LOGGER.debug("Annotation types of {}: {}", model.getName(), annotationTypes.collect(Collectors.toList()));
 
-		return Stream.concat(findFieldTypes(model), findAnnotationTypes(model)).distinct() // Remove duplicates
+		return Stream.concat(findFieldTypes(context, model), findAnnotationTypes(model)).distinct() // Remove duplicates
 			.map(type -> renderFullyQualifiedClassName((Project) model.getParent(), type))
 			.collect(Collectors.toList());
 	}
 
-	private static Stream<Type> findFieldTypes(Model model) {
-		return getAllFieldTypes(model)
+	private static Stream<Type> findFieldTypes(Context context, Model model) {
+		return getAllFieldTypes(context, model)
 			.filter(type -> !type.isBuiltIn());
 	}
 
@@ -64,12 +66,16 @@ public class ImportResolvingPhase {
 	 * @param model the model containing the fields.
 	 * @return all {@link Type}s used by the model's {@link de.stvehb.loki.core.ast.source.Field}s.
 	 */
-	private static Stream<Type> getAllFieldTypes(Model model) {
+	private static Stream<Type> getAllFieldTypes(Context context, Model model) {
 		return model.getFields().stream()
-			.flatMap(field -> Stream.of(
-				field.getType(),
-				field.getMapValueType()
-			).filter(Objects::nonNull));
+			.flatMap(field ->
+				Stream.of(
+					field.getType(),
+					field.getMapValueType(),
+					field.getMapValueType() != null ? JavaTypes.MAP : null,
+					field.isArray() && JavaGeneratorOptions.useListForArrays(context) ? JavaTypes.LIST : null
+				)
+			).filter(Objects::nonNull);
 	}
 
 	private static String renderFullyQualifiedClassName(Project project, Type type) {
