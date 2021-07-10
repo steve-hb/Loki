@@ -1,14 +1,10 @@
 package de.stvehb.loki.core.ast.source;
 
-import de.stvehb.loki.core.ast.Project;
-import de.stvehb.loki.core.util.Null;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @ToString
 @Getter
@@ -19,6 +15,7 @@ public class Model extends Type {
 
 	private List<Annotation> annotations = new ArrayList<>();
 	private List<Field> fields = new ArrayList<>();
+	private List<String> imports = new ArrayList<>();
 
 	public Model(String name, String namespace, String documentation) {
 		super(name, namespace, documentation);
@@ -36,24 +33,7 @@ public class Model extends Type {
 	 * @return a list with all imports
 	 */
 	public List<String> getImports() {
-		return Stream.concat(
-			Stream.concat(
-				this.getFields().stream()
-					.map(Field::getType)
-					.filter(type -> !type.isBuiltIn())
-					.map(Type::getName)
-					.filter(s -> ((Project) this.getParent()).getInfo().getNamespace() != null)//TODO: This is a dirty workaround
-					.map(s -> ((Project) this.getParent()).getInfo().getNamespace() + "." + s),
-				this.getFields().stream().flatMap(field -> Null.orEmpty(field.getAnnotations()).stream()
-					.filter(annotation -> annotation.getNamespace() != null)
-					.map(annotation -> annotation.getNamespace() + "." + annotation.getName())
-				)
-			),
-			this.getAnnotations()
-				.stream()
-				.filter(annotation -> annotation.getNamespace() != null)
-				.map(annotation -> annotation.getNamespace() + "." + annotation.getName())
-		).collect(Collectors.toList());
+		return this.imports;
 	}
 
 	@Override

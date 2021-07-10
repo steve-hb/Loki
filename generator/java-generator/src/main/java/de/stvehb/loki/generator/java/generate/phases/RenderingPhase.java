@@ -13,11 +13,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Generates the models & enums from the AST to final classes.
+ * Generates from the models & enums of the AST the final classes.
  */
-public class ModelGenerationPhase {
+public class RenderingPhase {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ModelGenerationPhase.class.getSimpleName());
+	private static final Logger LOGGER = LoggerFactory.getLogger(RenderingPhase.class.getSimpleName());
 
 	public static Map<Model, String> process(Context context, Project project) {
 		return ModelUtil.modelTypeStream(project)

@@ -1,16 +1,13 @@
 package de.stvehb.loki.cli.api;
 
-import com.google.gson.GsonBuilder;
-import de.stvehb.loki.core.ast.Author;
 import de.stvehb.loki.core.ast.Project;
-import de.stvehb.loki.core.ast.ProjectInfo;
-import de.stvehb.loki.core.ast.factory.FieldFactory;
 import de.stvehb.loki.core.ast.source.Model;
 import de.stvehb.loki.core.ast.source.Type;
 import de.stvehb.loki.core.generated.apidoc.Service;
 import de.stvehb.loki.core.option.DebugOptions;
 import de.stvehb.loki.core.option.Context;
 import de.stvehb.loki.core.util.ModelUtil;
+import de.stvehb.loki.generator.java.generate.JavaGenerator;
 import de.stvehb.loki.parser.ASTGenerator;
 import de.stvehb.loki.parser.ApidocParser;
 import de.stvehb.loki.generator.java.generate.phases.*;
@@ -22,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -159,21 +155,14 @@ public class Loki {
 
 	public static void process(Project project) {
 		Context context = new Context(
+			project,
 			new DebugOptions(true)
 		);
 
 		project.getModels().forEach(type -> type.setNamespace(project.getInfo().getNamespace())); //TODO: Workaround
 		project.getEnums().forEach(type -> type.setNamespace(project.getInfo().getNamespace()));
 
-		PreProcessLintingPhase.process(context, project);
-		GenerationTagPhase.process(context, project);
-		LombokifierPhase.process(context, project);
-
-		Map<Model, String> modelContents = ModelGenerationPhase.process(context, project);
-		File targetDirectoryFile = new File("./target/");
-		targetDirectoryFile.mkdir();
-
-		ResourceOutputPhase.processModels(targetDirectoryFile.toPath(), modelContents);
+		JavaGenerator.process(context, project);
 	}
 
 	/**
@@ -182,12 +171,13 @@ public class Loki {
 	 */
 	@SneakyThrows
 	private static void regenerateApiBuilderModels() {
-		Context context = new Context(
-			new DebugOptions(true)
-		);
-
 		Service service = Loki.loadApiBuilderService(new File("./apibuilder.json").toPath());
 		Project project = convertApiBuilderToAST(service);
+
+		Context context = new Context(
+			project,
+			new DebugOptions(true)
+		);
 
 		// Override namespace
 		String namespace = "de.stvehb.loki.core.generated.apidoc";
@@ -195,11 +185,11 @@ public class Loki {
 		project.getModels().forEach(type -> type.setNamespace(namespace));
 		project.getEnums().forEach(type -> type.setNamespace(namespace));
 
-		PreProcessLintingPhase.process(context, project);
+		LintingPhase.process(context, project);
 		GenerationTagPhase.process(context, project);
 		LombokifierPhase.process(context, project);
 
-		Map<Model, String> modelContents = ModelGenerationPhase.process(context, project);
+		Map<Model, String> modelContents = RenderingPhase.process(context, project);
 		File targetDirectoryFile = new File("./target/");
 		targetDirectoryFile.mkdir();
 

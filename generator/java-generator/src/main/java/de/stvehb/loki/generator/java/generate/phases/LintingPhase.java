@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
  * This phase will be executed before the AST gets processed by the Java generator. It's responsible for escaping illegal
  * field or class names and compliance with general Java code style guidelines (e.g. field and class naming).
  */
-public class PreProcessLintingPhase {
+public class LintingPhase {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PreProcessLintingPhase.class.getSimpleName());
+	private static final Logger LOGGER = LoggerFactory.getLogger(LintingPhase.class.getSimpleName());
 
 	public static void process(Context context, Project project) {
 		//TODO: [string] for arrays and string=>string for maps

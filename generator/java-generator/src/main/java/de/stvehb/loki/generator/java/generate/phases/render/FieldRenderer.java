@@ -1,6 +1,8 @@
 package de.stvehb.loki.generator.java.generate.phases.render;
 
+import de.stvehb.loki.core.ast.CompilerOption;
 import de.stvehb.loki.core.ast.source.Field;
+import de.stvehb.loki.core.option.CompilerOptions;
 import de.stvehb.loki.core.option.Context;
 
 public class FieldRenderer {
@@ -9,7 +11,11 @@ public class FieldRenderer {
 		String content = "private ";
 		context.getDebuggingStore().getLineStore().add("Render: Hardcoded accessor -> private");
 
+		boolean useListForArray = Boolean.parseBoolean(CompilerOptions.getOption(context, "java", "useListsForArrays")
+			.orElse(new CompilerOption(null, null, "false")).getValue());
+
 		if (field.getMapValueType() != null) content += "Map<";
+		if (field.isArray() && useListForArray) content += "List<";
 
 		content += field.getType().getName();
 		context.getDebuggingStore().getLineStore().add("Render: Field type -> " + field.getType().getName());
@@ -23,8 +29,13 @@ public class FieldRenderer {
 		}
 
 		if (field.isArray()) {
-			content += "[]";
-			context.getDebuggingStore().getLineStore().add("Render: Field is array");
+			if (useListForArray) {
+				content += ">";
+				context.getDebuggingStore().getLineStore().add("Render: Field is array & useListForArrays is active");
+			} else {
+				content += "[]";
+				context.getDebuggingStore().getLineStore().add("Render: Field is array");
+			}
 		}
 
 		content += " ";

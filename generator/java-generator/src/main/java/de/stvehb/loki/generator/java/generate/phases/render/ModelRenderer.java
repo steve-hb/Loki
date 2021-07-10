@@ -27,7 +27,7 @@ public class ModelRenderer {
 		content = PackageRenderer.render(project);
 		content += LINE_BREAK;
 
-		content += ImportRenderer.render(model);
+		content += ImportRenderer.render(context, model);
 		content += LINE_BREAK;
 
 		String javaDocs = JavaDocRenderer.render("", model.getDocumentation());
