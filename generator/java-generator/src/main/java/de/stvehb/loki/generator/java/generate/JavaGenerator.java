@@ -26,11 +26,11 @@ public class JavaGenerator {
 		printPhase("Lombokify");
 		LombokifierPhase.process(context, project);
 
-		printPhase("Import Resolving");
-		ImportResolvingPhase.process(context, project);
-
 		printPhase("Linting");
 		LintingPhase.process(context, project);
+
+		printPhase("Import Resolving");
+		ImportResolvingPhase.process(context, project);
 
 		printPhase("Rendering");
 		Map<Model, String> output = RenderingPhase.process(context, project);

@@ -32,7 +32,12 @@ In Java this phase is going to add an annotation to all models and enums provide
 This phase is extremely Java specific: It will add some nice Lombok annotations to all models and enums which
 will generate getters, setters and constructors.
 
-## 2.4 Import Resolving
+## 2.4 Linting
+
+This phase is responsible for escaping illegal field or class names and compliance with general
+code style guidelines (e.g. field and class naming) of the used language.
+
+## 2.5 Import Resolving
 
 This phase resolves all imports caused by types used in a model.
 
@@ -44,11 +49,6 @@ This phase resolves all imports caused by types used in a model.
         * **Type**
     * Type (in case of a Map, this type is the key)
     * Map-Value **Type**
-
-## 2. Linting
-
-This phase is responsible for escaping illegal field or class names and compliance with general
-code style guidelines (e.g. field and class naming) of the used language.
 
 ## 3. Rendering
 

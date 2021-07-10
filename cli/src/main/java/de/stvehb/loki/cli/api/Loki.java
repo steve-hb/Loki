@@ -185,21 +185,11 @@ public class Loki {
 		project.getModels().forEach(type -> type.setNamespace(namespace));
 		project.getEnums().forEach(type -> type.setNamespace(namespace));
 
-		LintingPhase.process(context, project);
-		GenerationTagPhase.process(context, project);
-		LombokifierPhase.process(context, project);
-
-		Map<Model, String> modelContents = RenderingPhase.process(context, project);
-		File targetDirectoryFile = new File("./target/");
-		targetDirectoryFile.mkdir();
-
-		ResourceOutputPhase.processModels(targetDirectoryFile.toPath(), modelContents);
+		JavaGenerator.process(context, project);
 	}
 
 	private static void loadLokiModels() {
-		Project project = loadLokiProjectFromResource("todo-example.loki.json");
-		System.out.println(project);
-		process(project);
+		regenerateApiBuilderModels();
 	}
 
 	public static void main(String[] args) {
