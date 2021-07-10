@@ -34,7 +34,7 @@ public class ImportResolvingPhase {
 		LOGGER.debug("Annotation types of {}: {}", model.getName(), annotationTypes.collect(Collectors.toList()));
 
 		return Stream.concat(findFieldTypes(context, model), findAnnotationTypes(model)).distinct() // Remove duplicates
-			.map(type -> renderFullyQualifiedClassName((Project) model.getParent(), type))
+			.map(ImportResolvingPhase::renderFullyQualifiedClassName)
 			.collect(Collectors.toList());
 	}
 
@@ -78,8 +78,8 @@ public class ImportResolvingPhase {
 			).filter(Objects::nonNull);
 	}
 
-	private static String renderFullyQualifiedClassName(Project project, Type type) {
-		return project.getInfo().getNamespace() + "." + type.getName();
+	private static String renderFullyQualifiedClassName(Type type) {
+		return type.getNamespace() + "." + type.getName();
 	}
 
 }

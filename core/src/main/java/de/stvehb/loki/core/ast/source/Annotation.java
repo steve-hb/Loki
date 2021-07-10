@@ -1,11 +1,13 @@
 package de.stvehb.loki.core.ast.source;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class Annotation extends Type {
 
 	private Map<String, String> values = new HashMap<>();
