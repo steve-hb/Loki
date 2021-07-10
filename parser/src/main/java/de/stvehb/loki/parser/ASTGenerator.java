@@ -73,7 +73,7 @@ public class ASTGenerator {
 
 			Arrays.stream(_model.getFields()).forEach(_field -> {
 				LOGGER.debug("Adding field to {} with type {} and name {}", model.getName(), _field.getType(), _field.getName());
-				Type type = types.stream().filter(m -> m.getName().equals(Naming.extractType(_field.getType()))).findFirst().get();
+				Type type = types.stream().filter(m -> m.getName().equals(Naming.extractType(_field.getType().replace("map", "")))).findFirst().get();
 
 				Field field = FieldFactory.create(type, Naming.isArrayType(_field.getType()), Naming.extractType(_field.getName()), _field.getDescription());
 				if (_field.getAnnotations() != null) {
