@@ -10,9 +10,18 @@
   ],
   "models": [
     {
+      "name": "User",
+      "fields": [
+        { "type": { "name": "string" }, "name": "name", "documentation": "The trimmed username of a person - which isn't necessary the full name.\nUsernames have to match this regex: ([0-9a-zA-Z.]+)" },
+        { "type": { "name": "string" }, "name": "name", "documentation": "A valid email address, that can be used to contact the user." }
+      ]
+    },
+    {
       "name": "Project",
       "documentation": "A project contains multiple tasks",
       "fields": [
+        { "type": { "name":  "User" }, "name": "owner", "documentation": "The administrative user." },
+        { "type": { "name":  "User" }, "array": true, "name": "members", "documentation": "Users with access to this project and its tasks." },
         { "type": { "name":  "Task" }, "array": true, "name": "tasks", "documentation": "Tasks to be done or that have been done." }
       ]
     },
@@ -22,7 +31,15 @@
       "fields": [
         { "type": { "name": "string" }, "name": "title", "documentation": "The title of the task." },
         { "type": { "name": "string" }, "name": "description", "documentation": "The description of the task." },
-        { "type": { "name": "string" }, "mapValueType": { "name": "string" }, "name": "description", "documentation": "The roles of users related to this task (e.g. reporter, assignee)." }
+        { "type": { "name": "User" }, "mapValueType": { "name": "Role" }, "name": "description", "documentation": "The roles of users related to this task (e.g. reporter, assignee)." }
+      ]
+    }
+  ],
+  "enums": [
+    {
+      "name": "Role",
+      "fields": [
+        { "type": { "name": "string" }, "array": true, "name": "permissions", "documentation": "All permissions this role grants." }
       ]
     }
   ]

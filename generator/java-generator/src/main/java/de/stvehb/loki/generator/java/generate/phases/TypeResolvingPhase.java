@@ -36,7 +36,7 @@ public class TypeResolvingPhase {
 				// Map-value
 				if (field.getMapValueType() != null) {
 					// Get global instance of type
-					Type mapValueType = getType(context, field.getType()).orElseThrow(() ->
+					Type mapValueType = getType(context, field.getMapValueType()).orElseThrow(() ->
 						new TypeResolveException("The requested type " + field.getType() + " cannot be resolved."));
 
 					// Set global type instance

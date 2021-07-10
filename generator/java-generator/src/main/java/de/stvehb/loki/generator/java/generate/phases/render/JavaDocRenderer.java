@@ -11,7 +11,7 @@ public class JavaDocRenderer {
 		if (documentation == null) return null;
 
 		return indent + "/**\n" + // /**
-			Arrays.stream(documentation.split(" \n"))
+			Arrays.stream(documentation.split("\n"))
 				.flatMap(s -> {
 					String[] words = s.split(" ");
 					List<String> lines = new ArrayList<>();
