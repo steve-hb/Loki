@@ -7,6 +7,7 @@ import de.stvehb.loki.core.ast.source.Model;
 import de.stvehb.loki.core.ast.source.Type;
 import de.stvehb.loki.core.option.Context;
 import de.stvehb.loki.core.option.JavaGeneratorOptions;
+import de.stvehb.loki.core.util.ModelUtil;
 import de.stvehb.loki.generator.java.generate.JavaTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ public class ImportResolvingPhase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ImportResolvingPhase.class.getSimpleName());
 
 	public static void process(Context context, Project project) {
-		project.getModels().forEach(model -> {
+		ModelUtil.models(project).forEach(model -> {
 			model.setImports(generateImports(context, model));
 			LOGGER.debug("Imports of {}: {}", model.getName(), model.getImports());
 		});
